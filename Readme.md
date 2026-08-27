@@ -16,7 +16,7 @@ runs it. Destructive actions (shutdown, restart) always ask for a spoken
 1. Install Python 3.10+.
 2. Install dependencies:
    ```
-   pip install -r requirements.txt
+   .\venv\Scripts\python.exe -m pip install -r requirements.txt
    ```
 3. Install Tesseract OCR (needed for "read the screen"):
    - Windows: `choco install tesseract` (or download the installer from the Tesseract GitHub)
@@ -24,7 +24,7 @@ runs it. Destructive actions (shutdown, restart) always ask for a spoken
    - Linux: `sudo apt install tesseract-ocr`
 4. Run it:
    ```
-   python main.py
+   .\venv\Scripts\python.exe main.py
    ```
 
 ## Commands it understands right now
