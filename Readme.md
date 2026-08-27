@@ -44,7 +44,7 @@ runs it. Destructive actions (shutdown, restart) always ask for a spoken
 ## Project structure
 
 ```
-voice_assistant/
+Jarvis-2.0/
   main.py                       # core loop
   modules/
     stt.py                      # offline speech-to-text (faster-whisper)
