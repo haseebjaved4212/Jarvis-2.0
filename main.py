@@ -10,7 +10,7 @@ mishearing background noise as a command. A wake-word engine (e.g. Porcupine)
 can be dropped in later once the command set is solid.
 """
 
-from modules import stt, tts, brain
+from modules import stt, tts, brain  # pyright: ignore[reportMissingImports]
 from modules.actions import (  # pyright: ignore[reportMissingImports]
     app_control,
     browser_control,
