@@ -4,7 +4,6 @@ Open and close applications across Windows, macOS, and Linux.
 
 import platform
 import subprocess
-import psutil
 
 SYSTEM = platform.system()  # "Windows", "Darwin", or "Linux"
 
@@ -25,12 +24,22 @@ def open_app(app_name: str):
 
 def close_app(app_name: str):
     app_name = app_name.strip().lower()
-    closed = False
-    for proc in psutil.process_iter(["name"]):
-        try:
-            if app_name in (proc.info["name"] or "").lower():
-                proc.terminate()
-                closed = True
-        except (psutil.NoSuchProcess, psutil.AccessDenied):
-            continue
-    return f"Closed {app_name}" if closed else f"Couldn't find a running app called {app_name}"
+    try:
+        if SYSTEM == "Windows":
+            result = subprocess.run(
+                ["taskkill", "/IM", app_name, "/T", "/F"],
+                capture_output=True,
+                text=True,
+            )
+        elif SYSTEM == "Darwin":
+            result = subprocess.run(["pkill", "-f", app_name], capture_output=True)
+        else:  # Linux
+            result = subprocess.run(["pkill", "-f", app_name], capture_output=True)
+
+        return (
+            f"Closed {app_name}"
+            if result.returncode == 0
+            else f"Couldn't find a running app called {app_name}"
+        )
+    except (OSError, subprocess.SubprocessError) as e:
+        return f"Couldn't close {app_name}: {e}"
